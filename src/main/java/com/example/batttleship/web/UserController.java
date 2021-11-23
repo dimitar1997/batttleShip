@@ -1,7 +1,9 @@
 package com.example.batttleship.web;
 
+import com.example.batttleship.models.biding.LoginBidingModel;
 import com.example.batttleship.models.biding.RegisterBidingModel;
 import com.example.batttleship.models.service.RegisterServiceModel;
+import com.example.batttleship.models.service.UserServiceLoginModel;
 import com.example.batttleship.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -33,15 +35,20 @@ public class UserController {
     }
 
 
-
-    @PostMapping("/login-error")
+    @PostMapping("/login")
     public String failedLogin(@ModelAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY)
-                    String userName, RedirectAttributes attributes) {
+                                          String username, RedirectAttributes attributes) {
+        UserServiceLoginModel userServiceLoginModel = userService.findLoginUser(username);
 
-        attributes.addFlashAttribute("bad_credentials", true);
-        attributes.addFlashAttribute("username", userName);
+        if (userServiceLoginModel == null) {
+            attributes.addFlashAttribute("bad_credentials", true);
+            attributes.addFlashAttribute("username", username);
 
-        return "redirect:login";
+            return "redirect:login";
+        }else {
+            return "redirect:/";
+        }
+
     }
 
     @GetMapping("/register")
@@ -63,7 +70,6 @@ public class UserController {
                 .map(registerBidingModel, RegisterServiceModel.class));
         return "redirect:login";
     }
-
 
 
     @ModelAttribute

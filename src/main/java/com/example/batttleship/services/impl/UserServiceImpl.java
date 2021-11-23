@@ -8,6 +8,10 @@ import com.example.batttleship.models.service.UserServiceLoginModel;
 import com.example.batttleship.repository.UserRepository;
 import com.example.batttleship.services.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +20,14 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
+    private final BattleShipImpl battleShip;
+
+
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder, BattleShipImpl battleShip) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
-
         this.passwordEncoder = passwordEncoder;
+        this.battleShip = battleShip;
     }
 
     @Override
@@ -29,18 +36,28 @@ public class UserServiceImpl implements UserService {
                 .map(registerServiceModel, User.class);
         user.setPassword(passwordEncoder.encode(registerServiceModel.getPassword()));
         userRepository.save(user);
+
+
     }
 
     @Override
-    public UserServiceLoginModel findLoginUser(LoginBidingModel loginBindingModel) {
-        User user = userRepository.findByUsernameAndPassword(
-                loginBindingModel.getUsername(),
-                loginBindingModel.getPassword())
+    public UserServiceLoginModel findLoginUser(String username) {
+        User user = userRepository.findByUsername(username)
                 .orElse(null);
-        if (user == null){
+        if (user == null) {
             return null;
-        }else {
-            return modelMapper.map(user,UserServiceLoginModel.class);
+        } else {
+            UserDetails principal = battleShip.loadUserByUsername(user.getUsername());
+            Authentication authentication = new UsernamePasswordAuthenticationToken(
+                    principal,
+                    user.getPassword(),
+                    principal.getAuthorities()
+            );
+
+            SecurityContextHolder.
+                    getContext().
+                    setAuthentication(authentication);
+            return modelMapper.map(user, UserServiceLoginModel.class);
         }
     }
 
