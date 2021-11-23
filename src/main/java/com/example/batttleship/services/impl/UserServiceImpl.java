@@ -51,13 +51,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void findLoginUser(String username) {
-        User user = userRepository.findByUsername(username)
-                .orElse(null);
+    public void initializationUsers() {
+        User dimitar = new User();
+        dimitar.setUsername("dimitar");
+        dimitar.setPassword(passwordEncoder.encode("12345"));
+        dimitar.setEmail("chakarov@abv.bg");
+        dimitar.setFullName("dimitar chakarov");
+        userRepository.save(dimitar);
 
-
-
-
+        User pesho = new User();
+        pesho.setUsername("pesho");
+        pesho.setPassword(passwordEncoder.encode("12345"));
+        pesho.setEmail("pesho@abv.bg");
+        pesho.setFullName("pesho peshov");
+        userRepository.save(pesho);
     }
+
 
 }

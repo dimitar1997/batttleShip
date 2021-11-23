@@ -7,6 +7,6 @@ import com.example.batttleship.models.service.UserServiceLoginModel;
 public interface UserService {
     void registerUser(RegisterServiceModel registerServiceModel);
 
-  void findLoginUser(String username);
+void initializationUsers();
 
 }

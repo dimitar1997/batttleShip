@@ -1,9 +1,7 @@
 package com.example.batttleship.web;
 
-import com.example.batttleship.models.biding.LoginBidingModel;
 import com.example.batttleship.models.biding.RegisterBidingModel;
 import com.example.batttleship.models.service.RegisterServiceModel;
-import com.example.batttleship.models.service.UserServiceLoginModel;
 import com.example.batttleship.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
