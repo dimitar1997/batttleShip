@@ -35,19 +35,14 @@ public class UserController {
     }
 
 
-    @PostMapping("/login")
+    @PostMapping("/login-error")
     public String failedLogin(@ModelAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY)
                                           String username, RedirectAttributes attributes) {
-        UserServiceLoginModel userServiceLoginModel = userService.findLoginUser(username);
 
-        if (userServiceLoginModel == null) {
             attributes.addFlashAttribute("bad_credentials", true);
             attributes.addFlashAttribute("username", username);
 
             return "redirect:login";
-        }else {
-            return "redirect:/";
-        }
 
     }
 

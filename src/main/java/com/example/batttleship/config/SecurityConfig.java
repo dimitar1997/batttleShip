@@ -31,7 +31,7 @@ private final PasswordEncoder passwordEncoder;
                 .usernameParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY)
                 .passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY)
                 .defaultSuccessUrl("/")
-                .failureForwardUrl("/users/login")
+                .failureForwardUrl("/users/login-error")
                 .and()
                 .logout()
                 .logoutUrl("users/logout")

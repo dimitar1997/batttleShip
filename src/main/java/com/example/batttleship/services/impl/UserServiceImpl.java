@@ -1,10 +1,9 @@
 package com.example.batttleship.services.impl;
 
 
-import com.example.batttleship.models.biding.LoginBidingModel;
+
 import com.example.batttleship.models.entity.User;
 import com.example.batttleship.models.service.RegisterServiceModel;
-import com.example.batttleship.models.service.UserServiceLoginModel;
 import com.example.batttleship.repository.UserRepository;
 import com.example.batttleship.services.UserService;
 import org.modelmapper.ModelMapper;
@@ -37,28 +36,28 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(registerServiceModel.getPassword()));
         userRepository.save(user);
 
+        UserDetails principal = battleShip.loadUserByUsername(user.getUsername());
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                principal,
+                user.getPassword(),
+                principal.getAuthorities()
+        );
+
+        SecurityContextHolder.
+                getContext().
+                setAuthentication(authentication);
+
 
     }
 
     @Override
-    public UserServiceLoginModel findLoginUser(String username) {
+    public void findLoginUser(String username) {
         User user = userRepository.findByUsername(username)
                 .orElse(null);
-        if (user == null) {
-            return null;
-        } else {
-            UserDetails principal = battleShip.loadUserByUsername(user.getUsername());
-            Authentication authentication = new UsernamePasswordAuthenticationToken(
-                    principal,
-                    user.getPassword(),
-                    principal.getAuthorities()
-            );
 
-            SecurityContextHolder.
-                    getContext().
-                    setAuthentication(authentication);
-            return modelMapper.map(user, UserServiceLoginModel.class);
-        }
+
+
+
     }
 
 }
