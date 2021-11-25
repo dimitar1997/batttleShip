@@ -15,4 +15,7 @@ public class UserDetailsIpm extends User {
     public UserDetailsIpm(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
     }
+    public String getUserIdentifier() {
+        return getUsername();
+    }
 }
