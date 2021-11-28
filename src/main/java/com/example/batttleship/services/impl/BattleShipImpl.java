@@ -30,7 +30,7 @@ public class BattleShipImpl implements UserDetailsService {
     private static UserDetails mapToUserDetails(User user) {
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + "USER"));
-        return new org.springframework.security.core.userdetails.User(user.getUsername(),
+        return new UserDetailsIpm(user.getUsername(),
                 user.getPassword(), grantedAuthorities);
     }
 }

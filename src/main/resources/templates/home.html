@@ -16,11 +16,10 @@
                             Select the attacker
                         </h3>
                         <div class="mb-1 text-white">You must select one of the logged-in users that owns a ship</div>
-                        <!-- TODO -->
-                        <select  class="form-select mt-5"
+                        <select  th:each="c : ${currentUserShips}" th:object="${c}" class="form-select mt-5"
                                 aria-label="Default select example">
                             <option selected>You must select one of the logged-in users that owns a ship</option>
-                            <option >One</option>
+                            <option th:text="*{name}">One</option>
                         </select>
 
                     </div>

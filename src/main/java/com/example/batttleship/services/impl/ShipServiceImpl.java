@@ -36,16 +36,15 @@ public class ShipServiceImpl implements ShipService {
         shipRepository.save(ship);
     }
 
-//    @Override
-//    public List<CurrentUserShipsViewModel> findAllShipsOfCurrentUser() {
-//        //TODO
-//        User user = userRepository.getById(currentUser.getId());
-//        return shipRepository.findAllByUser(user)
-//                .stream().map(ship -> modelMapper.map(ship, CurrentUserShipsViewModel.class))
-//                .collect(Collectors.toList());
-//
-//
-//    }
+    @Override
+    public List<CurrentUserShipsViewModel> findAllShipsOfCurrentUser(UserDetailsIpm user) {
+        User user1 = userRepository.findByUsername(user.getUserIdentifier()).orElseThrow();
+        return shipRepository.findAllByUser(user1)
+                .stream().map(ship -> modelMapper.map(ship, CurrentUserShipsViewModel.class))
+                .collect(Collectors.toList());
+
+
+    }
 
     @Override
     public List<AnotheUserShipsViewModel> findAnotherUserShips() {
