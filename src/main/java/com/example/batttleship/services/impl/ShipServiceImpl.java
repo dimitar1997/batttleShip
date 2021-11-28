@@ -47,14 +47,14 @@ public class ShipServiceImpl implements ShipService {
     }
 
     @Override
-    public List<AnotheUserShipsViewModel> findAnotherUserShips() {
+    public List<AnotheUserShipsViewModel> findAnotherUserShips(UserDetailsIpm user) {
         long id = userRepository.count();
-        //TODO
-//        if (currentUser.getId() == id){
-//           id-=1;
-//        }
-        User user = userRepository.getById(id);
-        return shipRepository.findAllByUser(user)
+        User currentUser = userRepository.findByUsername(user.getUserIdentifier()).orElseThrow();
+        if (currentUser.getId() == id){
+           id-=1;
+        }
+        User user1 = userRepository.getById(id);
+        return shipRepository.findAllByUser(user1)
                 .stream().map(ship -> modelMapper.map(ship, AnotheUserShipsViewModel.class))
                 .collect(Collectors.toList());
     }

@@ -11,7 +11,7 @@ import java.util.List;
 public interface ShipService {
     void addOrder(AddShipServiceModel addShipServiceModel);
 
-    List<AnotheUserShipsViewModel> findAnotherUserShips();
+    List<AnotheUserShipsViewModel> findAnotherUserShips(UserDetailsIpm user);
 
     List<AllShipsViewModel> getAllShips();
 

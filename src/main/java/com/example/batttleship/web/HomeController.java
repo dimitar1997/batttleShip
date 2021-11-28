@@ -29,7 +29,7 @@ public class HomeController {
         if (user != null) {
             List<CurrentUserShipsViewModel> currentUserShipsViewModels = shipService.findAllShipsOfCurrentUser(user);
             model.addAttribute("currentUserShips", currentUserShipsViewModels);
-            List<AnotheUserShipsViewModel> anotheUserShipsViewModels = shipService.findAnotherUserShips();
+            List<AnotheUserShipsViewModel> anotheUserShipsViewModels = shipService.findAnotherUserShips(user);
             model.addAttribute("anotherUserShips", anotheUserShipsViewModels);
             List<AllShipsViewModel> allShipsViewModels = shipService.getAllShips();
             model.addAttribute("allships", allShipsViewModels);
