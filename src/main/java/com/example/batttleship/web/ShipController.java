@@ -2,6 +2,7 @@ package com.example.batttleship.web;
 
 
 import com.example.batttleship.models.biding.AddShipBidingModel;
+import com.example.batttleship.models.exceptions.ObjectNotFound;
 import com.example.batttleship.models.service.AddShipServiceModel;
 import com.example.batttleship.repository.CategoryRepository;
 import com.example.batttleship.repository.UserRepository;
@@ -48,6 +49,9 @@ public class ShipController {
                     .addFlashAttribute("org.springframework.validation.BindingResult.addShipBidingModel", bindingResult);
 
             return "redirect:add";
+        }
+        if (user == null){
+            throw new ObjectNotFound();
         }
         AddShipServiceModel addShipServiceModel = modelMapper.map(addShipBidingModel, AddShipServiceModel.class);
         addShipServiceModel.setUser(userRepository.findByUsername(user.getUserIdentifier()).orElse(null));
