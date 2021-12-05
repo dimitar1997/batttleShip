@@ -1,5 +1,6 @@
 package com.example.batttleship.services;
 
+import com.example.batttleship.models.biding.FightShipsBiding;
 import com.example.batttleship.models.service.AddShipServiceModel;
 import com.example.batttleship.models.view.AllShipsViewModel;
 import com.example.batttleship.models.view.AnotheUserShipsViewModel;
@@ -16,4 +17,6 @@ public interface ShipService {
     List<AllShipsViewModel> getAllShips();
 
     List<CurrentUserShipsViewModel> findAllShipsOfCurrentUser(UserDetailsIpm user);
+
+    void fight(FightShipsBiding fightShipsBiding);
 }

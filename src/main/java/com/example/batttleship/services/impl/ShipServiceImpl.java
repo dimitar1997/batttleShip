@@ -1,6 +1,9 @@
 package com.example.batttleship.services.impl;
 
 
+import com.example.batttleship.models.biding.FightShipsBiding;
+import com.example.batttleship.models.entity.Category;
+import com.example.batttleship.models.entity.CategoryEnum;
 import com.example.batttleship.models.entity.Ship;
 import com.example.batttleship.models.entity.User;
 import com.example.batttleship.models.service.AddShipServiceModel;
@@ -45,6 +48,19 @@ public class ShipServiceImpl implements ShipService {
 
 
     }
+
+    @Override
+    public void fight(FightShipsBiding fightShipsBiding) {
+        Ship c = fightShipsBiding.getC();
+        Ship a = fightShipsBiding.getA();
+        if(c.getPower() > a.getHealth()){
+            a.setHealth(c.getPower() - a.getHealth());
+            if (a.getHealth() <= 0){
+                shipRepository.delete(a);
+            }
+        }
+    }
+
 
     @Override
     public List<AnotheUserShipsViewModel> findAnotherUserShips(UserDetailsIpm user) {

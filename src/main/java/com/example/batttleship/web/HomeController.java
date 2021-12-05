@@ -1,5 +1,6 @@
 package com.example.batttleship.web;
 
+import com.example.batttleship.models.biding.FightShipsBiding;
 import com.example.batttleship.models.view.AllShipsViewModel;
 import com.example.batttleship.models.view.AnotheUserShipsViewModel;
 import com.example.batttleship.models.view.CurrentUserShipsViewModel;
@@ -9,6 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 
 import java.util.List;
@@ -39,6 +41,13 @@ public class HomeController {
         }
 
 
+    }
+
+    @PostMapping("/")
+    public String fight(Model model, @AuthenticationPrincipal UserDetailsIpm user, FightShipsBiding fightShipsBiding){
+
+        shipService.fight(fightShipsBiding);
+        return index(model,user);
     }
 
 }
